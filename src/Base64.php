@@ -12,7 +12,7 @@ class Base64
      * @param string $data
      * @return string
      */
-    public function base64UrlEncode(string $data): string
+    public static function urlEncode(string $data): string
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
@@ -23,7 +23,7 @@ class Base64
      * @param string $data
      * @return string
      */
-    public function base64UrlDecode(string $data): string
+    public static function urlDecode(string $data): string
     {
         $decoded = base64_decode(
             strtr($data, '-_', '+/') 

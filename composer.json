@@ -1,7 +1,7 @@
 {
     "autoload": {
         "psr-4": {
-            "Basic\\Jwt\\": "scr/"
+            "Basic\\Jwt\\": "src/"
         }
     },
     "require-dev": {
