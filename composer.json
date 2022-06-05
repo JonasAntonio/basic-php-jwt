@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Basic\\Jwt\\": "scr/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
