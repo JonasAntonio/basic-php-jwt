@@ -8,11 +8,16 @@ class Sha256 implements Algorithm
 {
     public function name(): string
     {
-        return "Sha256";
+        return "sha256";
     }
 
-    public function headerName(): string
+    public function symmetricHeader(): string
     {
         return "HS256";
+    }
+
+    public function asymmetricHeader(): string
+    {
+        return "RS256";
     }
 }

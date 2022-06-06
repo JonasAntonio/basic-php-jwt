@@ -2,32 +2,27 @@
 
 namespace Basic\Jwt;
 
-use DomainException;
+use Basic\Jwt\Signatures\SignatureInterface;
 
 class Signature
 {
-    private string $key;
+    private Key $key;
     private Algorithm $algorithm;
 
-    public function __construct(Algorithm $algorithm, string $key)
+    private array $classMap = [
+        0 => "Basic\\Jwt\\Signatures\\Symmetric",
+        1 => "Basic\Jwt\Signatures\\Asymmetric"
+    ];
+
+    public function __construct(Algorithm $algorithm, Key $key)
     {
         $this->key = $key;
         $this->algorithm = $algorithm;
     }
 
-    public function sign(string $header, string $payload): string
+    public function instance(): SignatureInterface
     {
-        $signature = hash_hmac(
-            $this->algorithm->name(),
-            (string) $header . "." . (string) $payload,
-            $this->key,
-            true
-        );
-
-        if ($signature === null) {
-            throw new DomainException("Error signing token", 1);
-        }
-
-        return Base64::urlEncode($signature);
+        $class = $this->classMap[(int) $this->key->isAsymmetric()];
+        return new $class($this->algorithm, $this->key);
     }
 }

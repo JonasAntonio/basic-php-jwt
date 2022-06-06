@@ -8,11 +8,16 @@ class Sha512 implements Algorithm
 {
     public function name(): string
     {
-        return "Sha512";
+        return "sha512";
     }
 
-    public function headerName(): string
+    public function symmetricHeader(): string
     {
         return "HS512";
+    }
+
+    public function asymmetricHeader(): string
+    {
+        return "RS512";
     }
 }

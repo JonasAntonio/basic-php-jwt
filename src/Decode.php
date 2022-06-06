@@ -16,9 +16,9 @@ class Decode
     /**
      * Signature key
      *
-     * @var string
+     * @var Key
      */
-    private string $key;
+    private Key $key;
 
     /**
      * Jwt to decode
@@ -27,11 +27,28 @@ class Decode
      */
     private string $jwt;
 
+    /**
+     * JWT header
+     *
+     * @var string
+     */
     private string $header;
+
+    /**
+     * JWT payload
+     *
+     * @var string
+     */
     private string $payload;
+
+    /**
+     * JWT signature
+     *
+     * @var string
+     */
     private string $providedSignature;
 
-    public function __construct(string $jwt, Algorithm $algorithm, string $key)
+    public function __construct(string $jwt, Algorithm $algorithm, Key $key)
     {
         $this->jwt = $jwt;
         $this->algorithm = $algorithm;
@@ -58,7 +75,7 @@ class Decode
 
     public function isValid(): bool
     {
-        $signature = new Signature($this->algorithm, $this->key);
+        $signature = (new Signature($this->algorithm, $this->key))->instance();
 
         if ($this->isExpired()) return false;
 

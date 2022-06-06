@@ -14,40 +14,45 @@ class Encode
     /**
      * Signature key
      *
-     * @var string
+     * @var Key
      */
-    private string $key;
+    private Key $key;
 
     /**
      * Time in seconds to expire the token
      *
-     * @var integer|null
+     * @var integer
      */
-    private ?int $expiresIn;
+    private int $expiresIn;
 
     public function __construct(
         Algorithm $algorithm,
-        string $key,
-        ?int $expiresIn = null
+        Key $key,
+        int $expiresIn
     ) {
         $this->algorithm = $algorithm;
         $this->key = $key;
         $this->expiresIn = $expiresIn;
     }
 
+    /**
+     * Create a JWT
+     *
+     * @param array $payload
+     * @return array
+     */
     public function get(array $payload): array
     {
-        $signature = new Signature($this->algorithm, $this->key);
-        $header    = new Header($this->algorithm);
+        $header    = new Header($this->algorithm, $this->key);
         $payload   = new Payload($payload, $this->expiresIn);
-        $signature = $signature->sign((string) $header, (string) $payload);
+        $signature = (new Signature($this->algorithm, $this->key))->instance();
 
         return [
-            "jwt" => (string) $header
+            "jwt" => $header
                 . "."
-                . (string) $payload
+                .  $payload
                 . "."
-                . (string) $signature,
+                . $signature->sign($header, $payload),
             "exp" => $payload->exp()
         ];
     }

@@ -4,24 +4,24 @@ namespace Basic\Jwt;
 
 class Header
 {
-    private Algorithm $algorithm;
     private array $data;
 
-    public function __construct(Algorithm $algorithm)
+    public function __construct(Algorithm $algorithm, Key $key)
     {
-        $this->algorithm = $algorithm;
         $this->data = [
             'typ' => 'JWT',
-            'alg' => $this->algorithm->headerName()
+            'alg' => $key->isAsymmetric()
+                ? $algorithm->asymmetricHeader()
+                : $algorithm->symmetricHeader()
         ];
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return Base64::urlEncode(json_encode($this->data));
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return $this->data;
     }

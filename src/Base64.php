@@ -26,8 +26,8 @@ class Base64
     public static function urlDecode(string $data): string
     {
         $decoded = base64_decode(
-            strtr($data, '-_', '+/') 
-            . str_repeat('=', 3 - (3 + strlen($data)) % 4)
+            strtr($data, '-_', '+/')
+                . str_repeat('=', 3 - (3 + strlen($data)) % 4)
         );
 
         if ($decoded === false) {

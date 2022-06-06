@@ -17,17 +17,17 @@ class Payload
         ], $data);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return Base64::urlEncode(json_encode($this->data));
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return $this->data;
     }
 
-    public function exp()
+    public function exp(): int
     {
         return $this->exp;
     }
