@@ -1,4 +1,16 @@
 {
+    "name": "jonas-vicente/basic-php-jwt",
+    "description": "A basic lib to create and validate JWT tokens",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Jonas Vicente"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.4 || ^8.0"
+    },
     "autoload": {
         "psr-4": {
             "Basic\\Jwt\\": "src/"
