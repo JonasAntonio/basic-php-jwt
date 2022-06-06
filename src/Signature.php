@@ -9,7 +9,7 @@ class Signature
     private Key $key;
     private Algorithm $algorithm;
 
-    private array $classMap = [
+    private const CLASS_MAP = [
         0 => "Basic\\Jwt\\Signatures\\Symmetric",
         1 => "Basic\Jwt\Signatures\\Asymmetric"
     ];
@@ -22,7 +22,7 @@ class Signature
 
     public function instance(): SignatureInterface
     {
-        $class = $this->classMap[(int) $this->key->isAsymmetric()];
+        $class = self::CLASS_MAP[(int) $this->key->isAsymmetric()];
         return new $class($this->algorithm, $this->key);
     }
 }
